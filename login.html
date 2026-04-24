@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Stance Customs — Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 120px);
+    }
+
+    .auth-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .auth-form-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: var(--bg, #111);
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 36px;
+      border-bottom: 2px solid var(--border, #2a2a2a);
+    }
+    .auth-tab {
+      padding: 10px 28px;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted, #888);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .auth-tab.active {
+      color: var(--accent, #e8c84a);
+      border-bottom-color: var(--accent, #e8c84a);
+    }
+
+    .section-label {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text, #f0f0f0);
+      margin: 0;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted, #888);
+    }
+    .form-group input {
+      padding: 11px 14px;
+      background: var(--input-bg, #1c1c1c);
+      border: 1px solid var(--border, #2a2a2a);
+      border-radius: 4px;
+      color: var(--text, #f0f0f0);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--accent, #e8c84a);
+    }
+    .form-group input.input-error {
+      border-color: #e84a4a;
+    }
+
+    .field-error {
+      font-size: 0.75rem;
+      color: #e84a4a;
+      margin-top: 3px;
+      display: none;
+    }
+    .field-error.visible {
+      display: block;
+    }
+
+    .form-alert {
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 0.83rem;
+      margin-bottom: 18px;
+      display: none;
+    }
+    .form-alert.error {
+      background: rgba(232, 74, 74, 0.12);
+      border: 1px solid #e84a4a;
+      color: #e84a4a;
+      display: block;
+    }
+    .form-alert.success {
+      background: rgba(74, 200, 74, 0.12);
+      border: 1px solid #4ac84a;
+      color: #4ac84a;
+      display: block;
+    }
+
+    .form-submit {
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-accent { background: var(--accent, #e8c84a); color: #111; }
+    .btn-yellow { background: var(--accent, #e8c84a); color: #111; }
+
+    .form-switch {
+      font-size: 0.82rem;
+      color: var(--muted, #888);
+      text-align: center;
+      margin: 0;
+    }
+    .form-switch a {
+      color: var(--accent, #e8c84a);
+      text-decoration: none;
+    }
+    .form-switch a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      .auth-layout { grid-template-columns: 1fr; }
+      .auth-image  { display: none; }
+      .auth-form-side { padding: 40px 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="header-brand">
+      <div class="logo-box">
+        <img src="images/logo.png" alt="The Stance Customs Logo">
+      </div>
+      <div class="brand-name"><em>T</em>HE STANCE CUSTOMS</div>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="active">Login</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="auth-layout">
+
+      <!-- LEFT: image -->
+      <div class="auth-image">
+        <img src="images/_ (1).jpeg" alt="_(1)">
+      </div>
+
+      <!-- RIGHT: form -->
+      <div class="auth-form-side">
+
+        <div class="auth-tabs">
+          <a href="#" class="auth-tab active" id="tab-login"  onclick="showTab('login');  return false;">Log In</a>
+          <a href="#" class="auth-tab"         id="tab-signup" onclick="showTab('signup'); return false;">Sign Up</a>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="form-login">
+
+          <p class="section-label" style="margin-bottom: 28px;">Welcome back</p>
+
+          <div id="login-alert" class="form-alert"></div>
+
+          <div class="form-group">
+            <label for="login-email">Username or Email</label>
+            <input type="email" id="login-email" placeholder="your@email.com" oninput="clearError('login-email', 'err-login-email')">
+            <span class="field-error" id="err-login-email"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="login-pass">Password</label>
+            <input type="password" id="login-pass" placeholder="••••••••" oninput="clearError('login-pass', 'err-login-pass')">
+            <span class="field-error" id="err-login-pass"></span>
+          </div>
+
+          <div class="form-submit">
+            <button class="btn btn-accent" onclick="handleLogin()">Log In</button>
+          </div>
+
+          <p class="form-switch">
+            Don't have an account?
+            <a href="#" onclick="showTab('signup'); return false;">Sign Up</a>
+          </p>
+
+        </div>
+
+        <!-- SIGN UP FORM -->
+        <div id="form-signup" style="display: none;">
+
+          <p class="section-label" style="margin-bottom: 28px;">Create your account</p>
+
+          <div id="signup-alert" class="form-alert"></div>
+
+          <div class="form-group">
+            <label for="signup-email">Username or Email</label>
+            <input type="email" id="signup-email" placeholder="your@email.com" oninput="clearError('signup-email', 'err-signup-email')">
+            <span class="field-error" id="err-signup-email"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-pass">New Password</label>
+            <input type="password" id="signup-pass" placeholder="••••••••" oninput="clearError('signup-pass', 'err-signup-pass')">
+            <span class="field-error" id="err-signup-pass"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-confirm">Confirm Password</label>
+            <input type="password" id="signup-confirm" placeholder="••••••••" oninput="clearError('signup-confirm', 'err-signup-confirm')">
+            <span class="field-error" id="err-signup-confirm"></span>
+          </div>
+
+          <div class="form-submit">
+            <button class="btn btn-yellow" onclick="handleSignup()">Sign Up</button>
+          </div>
+
+          <p class="form-switch">
+            Already have an account?
+            <a href="#" onclick="showTab('login'); return false;">Log In</a>
+          </p>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ditso Arnold Mmopi — The Stance Customs. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function showTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('form-login').style.display  = isLogin ? 'block' : 'none';
+      document.getElementById('form-signup').style.display = isLogin ? 'none'  : 'block';
+      document.getElementById('tab-login').classList.toggle('active',  isLogin);
+      document.getElementById('tab-signup').classList.toggle('active', !isLogin);
+      clearAllErrors();
+    }
+
+    function showFieldError(inputId, errorId, message) {
+      document.getElementById(inputId).classList.add('input-error');
+      const err = document.getElementById(errorId);
+      err.textContent = message;
+      err.classList.add('visible');
+    }
+
+    function clearError(inputId, errorId) {
+      document.getElementById(inputId).classList.remove('input-error');
+      document.getElementById(errorId).classList.remove('visible');
+    }
+
+    function clearAllErrors() {
+      document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+      document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
+      document.querySelectorAll('.form-alert').forEach(el => { el.className = 'form-alert'; el.textContent = ''; });
+    }
+
+    function setAlert(id, type, message) {
+      const el = document.getElementById(id);
+      el.className = 'form-alert ' + type;
+      el.textContent = message;
+    }
+
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    }
+
+    function handleLogin() {
+      clearAllErrors();
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-pass').value;
+      let valid = true;
+
+      if (!email) {
+        showFieldError('login-email', 'err-login-email', 'Please enter your email or username.');
+        valid = false;
+      } else if (!isValidEmail(email)) {
+        showFieldError('login-email', 'err-login-email', "That doesn't look like a valid email address.");
+        valid = false;
+      }
+
+      if (!pass) {
+        showFieldError('login-pass', 'err-login-pass', 'Please enter your password.');
+        valid = false;
+      } else if (pass.length < 8) {
+        showFieldError('login-pass', 'err-login-pass', 'Password must be at least 8 characters.');
+        valid = false;
+      }
+
+      if (!valid) {
+        setAlert('login-alert', 'error', 'Please fix the errors above before continuing.');
+        return;
+      }
+
+      // ⬇️ Replace this block with your real authentication logic
+      setAlert('login-alert', 'error', 'Incorrect email or password. Please try again.');
+      document.getElementById('login-pass').value = '';
+      showFieldError('login-pass', 'err-login-pass', 'Check your password and try again.');
+    }
+
+    function handleSignup() {
+      clearAllErrors();
+      const email   = document.getElementById('signup-email').value.trim();
+      const pass    = document.getElementById('signup-pass').value;
+      const confirm = document.getElementById('signup-confirm').value;
+      let valid = true;
+
+      if (!email) {
+        showFieldError('signup-email', 'err-signup-email', 'Please enter your email address.');
+        valid = false;
+      } else if (!isValidEmail(email)) {
+        showFieldError('signup-email', 'err-signup-email', "That doesn't look like a valid email address.");
+        valid = false;
+      }
+
+      if (!pass) {
+        showFieldError('signup-pass', 'err-signup-pass', 'Please create a password.');
+        valid = false;
+      } else if (pass.length < 8) {
+        showFieldError('signup-pass', 'err-signup-pass', 'Password must be at least 8 characters long.');
+        valid = false;
+      } else if (!/[A-Z]/.test(pass)) {
+        showFieldError('signup-pass', 'err-signup-pass', 'Password must include at least one uppercase letter.');
+        valid = false;
+      } else if (!/[0-9]/.test(pass)) {
+        showFieldError('signup-pass', 'err-signup-pass', 'Password must include at least one number.');
+        valid = false;
+      }
+
+      if (!confirm) {
+        showFieldError('signup-confirm', 'err-signup-confirm', 'Please confirm your password.');
+        valid = false;
+      } else if (pass && confirm !== pass) {
+        showFieldError('signup-confirm', 'err-signup-confirm', 'Passwords do not match. Try again.');
+        valid = false;
+      }
+
+      if (!valid) {
+        setAlert('signup-alert', 'error', 'Please fix the errors above before continuing.');
+        return;
+      }
+
+      // ⬇️ Replace this block with your real sign-up logic
+      setAlert('signup-alert', 'success', 'Account created! Redirecting you to login…');
+      setTimeout(() => showTab('login'), 1800);
+    }
+  </script>
+
+</body>
+</html>
